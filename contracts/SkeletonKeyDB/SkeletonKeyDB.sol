@@ -208,7 +208,7 @@ contract SkeletonKeyDB is ISkeletonKeyDB {
         if (adminKeyIds[asset].length > 0) {
             if (ids.length == 0) delete adminKeyIds[asset];
             else adminKeyIds[asset] = ids;
-        }
+        } else adminKeyIds[asset] = ids;
     }
 
     function uintPresent(uint target, uint[] memory arr)

@@ -19,7 +19,7 @@ abstract contract Mock20Base is ERC20 {
         return balanceOf(msg.sender);
     }
 
-    constructor(string memory name, string memory symbol) ERC20(name, symbol) {
+    constructor(string memory n, string memory s) ERC20(n, s) {
         quickMint();
     }
 }
@@ -36,7 +36,7 @@ contract WrappedEthereum is Mock20Base {
     constructor() Mock20Base("Wrapped Ethereum", "wETH") {}
 }
 
-contract WrappedMatic is Mock20Base {
+contract Matic is Mock20Base {
     constructor() Mock20Base("Wrapped Polygon", "wMATIC") {}
 }
 
