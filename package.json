@@ -1,0 +1,36 @@
+{
+  "name": "hemlockstreet-evm-contracts",
+  "version": "1.0.0",
+  "description": "HemlockStreet EVM Contracts is a library for secure, enterprise-grade smart contract development.",
+  "scripts": {
+    "test": "npx hardhat test",
+    "compile": "hardhat compile",
+    "clean": "npx hardhat clean",
+    "gas-report": "env ENABLE_GAS_REPORT=true npm run test",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HemlockStreet/hemlockstreet-evm-contracts.git"
+  },
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "smart",
+    "contracts",
+    "security",
+    "hemlock",
+	"enterprise"
+  ],
+  "author": "ctnava",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HemlockStreet/hemlockstreet-evm-contracts/issues"
+  },
+  "homepage": "https://github.com/HemlockStreet/hemlockstreet-evm-contracts#readme",
+  "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@openzeppelin/contracts": "^4.7.3",
+    "hardhat": "^2.12.0"
+  }
+}
