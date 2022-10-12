@@ -2,7 +2,7 @@
 pragma solidity >=0.7.0 <0.9.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../SkeletonKeyDB/Asset/Implementations/AccessToken.sol";
-import "./IChainPostControlPanel.sol";
+import "./IChainPostIndexer.sol";
 
 /**
  * @title ChainPostAccessToken
@@ -36,7 +36,7 @@ contract ChainPostAccessToken is AccessToken {
             : uri;
     }
 
-    function setBaseURI(string memory uri) public RequiredTier(2) {
+    function _setBaseURI(string memory uri) public RequiredTier(2) {
         _uri = uri;
     }
 }

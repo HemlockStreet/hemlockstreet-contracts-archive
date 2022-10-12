@@ -17,43 +17,31 @@ import "./IPriceConverter.sol";
 contract ChainPost is Asset {
     address public _indexer;
     address public _converter;
-    IChainPostIndexer indexer;
-    IPriceConverter converter;
 
     constructor(address db, address cnvrt) Asset(db, address(0)) {
-        converter = IPriceConverter(cnvrt);
         _converter = cnvrt;
     }
 
-    function setIndexer(address addr) public RequiredTier(2) {
-        indexer = IChainPostIndexer(addr);
+    function _setIndexer(address addr) public RequiredTier(2) {
         _indexer = addr;
     }
 
-    function setConverter(address addr) public RequiredTier(2) {
-        converter = IPriceConverter(addr);
+    function _setConverter(address addr) public RequiredTier(2) {
         _converter = addr;
     }
 
     function numSupported() public view returns (uint tokens, uint feeds) {
-        (tokens, feeds) = indexer.numSupported();
+        (tokens, feeds) = IChainPostIndexer(_indexer).numSupported();
     }
 
-    function findPair(string memory symbol, string memory vs)
+    function findPair(string memory symbol, string memory basePair)
         public
         view
-        returns (uint feedId)
+        returns (address tknAddr, address pfAddr)
     {
-        uint tokenId = indexer.queryTokenSymbol(symbol);
-        feedId = indexer.queryFeedToken(tokenId, vs);
-    }
+        IChainPostIndexer indexer = IChainPostIndexer(_indexer);
 
-    function metadata(uint idx)
-        public
-        view
-        returns (IERC20 token, AggregatorV3Interface feed)
-    {
-        token = IERC20(indexer.token(idx).addr);
-        feed = AggregatorV3Interface(indexer.priceFeed(idx).addr);
+        uint idx = indexer.queryPair(symbol, basePair);
+        (tknAddr, pfAddr, , , ) = indexer.metadata(idx);
     }
 }

@@ -3,7 +3,7 @@ const { assert, expect } = require('chai');
 
 const null_addr = '0x0000000000000000000000000000000000000000';
 
-describe('All', () => {
+describe('SkeletonKeyDB Ecosystem', () => {
   let nft = [];
   let skdb, deployer, users;
   let asset = {};
@@ -61,8 +61,8 @@ describe('All', () => {
     expect(meta.deployer == dp.address);
   }
 
-  describe('Standalone Asset Initial State', () => {
-    it('Asset should be compatible with SKDB', async () => {
+  describe('Asset - Standalone Initial State', () => {
+    it('should be compatible with SKDB', async () => {
       await verifyMetadata(asset.standalone);
     });
   });
@@ -96,7 +96,7 @@ describe('All', () => {
       .defineAdminKey(asset.standalone.address, token.address, ids);
   }
 
-  describe('DB Access Control', () => {
+  describe('SKDB - Access Control', () => {
     it('Let the asset deployer register & re-register skeleton keys (Tier 3)', async () => {
       // Defining...
       await defineSK(nft[0]);
@@ -254,7 +254,7 @@ describe('All', () => {
     });
   });
 
-  describe('Asset (Component) Access Control', () => {
+  describe('Asset (Component) - Access Control', () => {
     beforeEach(async () => {
       await defineSK();
       await defineEK();
@@ -316,7 +316,7 @@ describe('All', () => {
     });
   });
 
-  describe('Standalone Access Tokens', () => {
+  describe('Standalone Access Tokens - Access Control', () => {
     beforeEach(async () => {
       await skdb
         .connect(deployer)
@@ -359,15 +359,15 @@ describe('All', () => {
     });
 
     it('Should only let tier >= 2 mint tokens', async () => {
-      await w2at.connect(deployer).mintTo(deployer.address);
-      await w2at.connect(users[0]).mintTo(users[0].address);
+      await w2at.connect(deployer)._mintTo(deployer.address);
+      await w2at.connect(users[0])._mintTo(users[0].address);
       // expect(
-      //   w2at.connect(users[1]).mintTo(users[1].address)
+      //   w2at.connect(users[1])._mintTo(users[1].address)
       // ).to.be.revertedWith('!Authorized');
     });
   });
 
-  describe('Access Tokens', () => {
+  describe('Access Tokens - Access Control', () => {
     beforeEach(async () => {
       await skdb
         .connect(deployer)
@@ -378,7 +378,7 @@ describe('All', () => {
         .defineExecutiveKey(asset.standalone.address, nft[0].address, 2);
 
       for await (const user of users) {
-        await w3at.connect(deployer).mintTo(user.address);
+        await w3at.connect(deployer)._mintTo(user.address);
       }
 
       await skdb
@@ -430,10 +430,10 @@ describe('All', () => {
     });
 
     it('Should only let tier >= 2 mint tokens', async () => {
-      await w3at.connect(deployer).mintTo(deployer.address);
-      await w3at.connect(users[0]).mintTo(users[0].address);
+      await w3at.connect(deployer)._mintTo(deployer.address);
+      await w3at.connect(users[0])._mintTo(users[0].address);
       // expect(
-      //   w3at.connect(users[1]).mintTo(users[1].address)
+      //   w3at.connect(users[1])._mintTo(users[1].address)
       // ).to.be.revertedWith('!Authorized');
     });
   });

@@ -16,13 +16,13 @@ abstract contract AccessToken is ERC721, Asset {
     uint internal _tokenIds;
 
     constructor(
-        string memory name,
-        string memory symbol,
+        string memory n,
+        string memory s,
         address db,
         address ast
-    ) ERC721(name, symbol) Asset(db, ast) {}
+    ) ERC721(n, s) Asset(db, ast) {}
 
-    function mintTo(address receiver) public RequiredTier(2) returns (uint) {
+    function _mintTo(address receiver) public RequiredTier(2) returns (uint) {
         _tokenIds++;
         _mint(receiver, _tokenIds);
         return _tokenIds;

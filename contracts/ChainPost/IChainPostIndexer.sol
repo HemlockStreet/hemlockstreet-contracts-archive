@@ -15,6 +15,10 @@ interface IChainPostIndexer {
         address addr;
     }
 
+    function supportedTokens() external view returns (uint);
+
+    function supportedFeeds() external view returns (uint);
+
     function token(uint idx) external view returns (Token memory);
 
     function priceFeed(uint idx) external view returns (PriceFeed memory);
@@ -28,13 +32,29 @@ interface IChainPostIndexer {
         view
         returns (uint);
 
+    function queryPair(string memory symbol, string memory vs)
+        external
+        view
+        returns (uint);
+
     function metadata(uint idx)
         external
         view
         returns (
-            PriceFeed memory feed,
-            Token memory underlying,
-            bool native,
+            address tokenAddress,
+            address feedAddress,
+            string memory tokenSymbol,
+            string memory currencyPair,
             bool defined
         );
+
+    function registerToken(string memory symbol, address addr)
+        external
+        returns (uint);
+
+    function registerFeed(
+        uint assetId,
+        string memory vs,
+        address addr
+    ) external returns (uint);
 }

@@ -5,8 +5,7 @@
   "scripts": {
     "test": "npx hardhat test",
     "compile": "hardhat compile",
-    "clean": "npx hardhat clean",
-    "gas-report": "env ENABLE_GAS_REPORT=true npm run test",
+    "clean": "npx hardhat clean"
   },
   "repository": {
     "type": "git",

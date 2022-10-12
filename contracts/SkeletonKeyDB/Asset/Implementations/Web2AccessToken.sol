@@ -20,7 +20,7 @@ abstract contract Web2AccessToken is ERC721, Asset {
         address db
     ) ERC721(label, sym) Asset(db, address(0)) {}
 
-    function mintTo(address receiver) public RequiredTier(2) returns (uint) {
+    function _mintTo(address receiver) public RequiredTier(2) returns (uint) {
         _tokenIds++;
         _mint(receiver, _tokenIds);
         return _tokenIds;

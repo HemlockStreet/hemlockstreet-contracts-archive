@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 import "./IChainPostIndexer.sol";
-import "./IChainPostControlPanel.sol";
 import "../SkeletonKeyDB/Asset/Asset.sol";
 
 /**
@@ -12,7 +11,7 @@ import "../SkeletonKeyDB/Asset/Asset.sol";
  *
  * @author CyAaron Tai Nava || hemlockStreet.x
  */
-contract ChainPostIndexer is IChainPostIndexer, IChainPostControlPanel, Asset {
+contract ChainPostIndexer is IChainPostIndexer, Asset {
     function compareStrings(string memory self, string memory b)
         internal
         pure
@@ -27,7 +26,26 @@ contract ChainPostIndexer is IChainPostIndexer, IChainPostControlPanel, Asset {
     mapping(uint => PriceFeed) internal _priceFeeds;
     uint internal feedIds;
 
-    constructor(address db, address master) Asset(db, master) {}
+    function supportedTokens() public view override returns (uint tokens) {
+        tokens = tokenIds;
+    }
+
+    function supportedFeeds() public view override returns (uint feeds) {
+        feeds = feedIds;
+    }
+
+    constructor(
+        string memory symbol,
+        address wAddr,
+        address pfAddr,
+        address db,
+        address master
+    ) Asset(db, master) {
+        tokenIds++;
+        _tokens[tokenIds] = Token(symbol, wAddr);
+        feedIds++;
+        _priceFeeds[feedIds] = PriceFeed(1, "USD", pfAddr);
+    }
 
     function token(uint idx) public view override returns (Token memory) {
         return _tokens[idx];
@@ -52,29 +70,6 @@ contract ChainPostIndexer is IChainPostIndexer, IChainPostControlPanel, Asset {
         feeds = feedIds;
     }
 
-    function queryTokenSymbol(string memory sym)
-        public
-        view
-        override
-        returns (uint)
-    {
-        for (uint i = 0; i <= tokenIds; i++) {
-            if (compareStrings(sym, token(i).symbol)) return i;
-        }
-        return 0;
-    }
-
-    function queryTokenAddress(address addr) internal view returns (uint) {
-        for (uint i = 0; i <= tokenIds; i++) {
-            if (addr == token(i).addr) return i;
-        }
-        return 0;
-    }
-
-    function isGas(Token memory tkn) internal pure returns (bool gas) {
-        gas = (tkn.addr == address(0)) && (!compareStrings(tkn.symbol, ""));
-    }
-
     function isDefined(PriceFeed memory feed)
         internal
         view
@@ -91,21 +86,30 @@ contract ChainPostIndexer is IChainPostIndexer, IChainPostControlPanel, Asset {
         view
         override
         returns (
-            PriceFeed memory feed,
-            Token memory underlying,
-            bool nativeToken,
+            address tokenAddress,
+            address feedAddress,
+            string memory tokenSymbol,
+            string memory currencyPair,
             bool defined
         )
     {
-        feed = priceFeed(feedId);
-        underlying = token(feed.tokenId);
-        nativeToken = isGas(underlying);
-        defined = isDefined(feed);
+        PriceFeed memory pf = priceFeed(feedId);
+        Token memory tkn = token(pf.tokenId);
+        tokenAddress = tkn.addr;
+        feedAddress = pf.addr;
+        tokenSymbol = tkn.symbol;
+        currencyPair = pf.vs;
+        defined = isDefined(pf);
     }
 
-    function queryFeedAddress(address addr) internal view returns (uint) {
-        for (uint i = 0; i <= feedIds; i++) {
-            if (addr == priceFeed(i).addr) return i;
+    function queryTokenSymbol(string memory sym)
+        public
+        view
+        override
+        returns (uint)
+    {
+        for (uint i = 0; i <= tokenIds; i++) {
+            if (compareStrings(sym, token(i).symbol)) return i;
         }
         return 0;
     }
@@ -125,7 +129,24 @@ contract ChainPostIndexer is IChainPostIndexer, IChainPostControlPanel, Asset {
         return 0;
     }
 
+    function queryPair(string memory symbol, string memory vs)
+        public
+        view
+        override
+        returns (uint feedId)
+    {
+        uint tokenId = queryTokenSymbol(symbol);
+        feedId = queryFeedToken(tokenId, vs);
+    }
+
     // Setters
+    function queryTokenAddress(address addr) internal view returns (uint) {
+        for (uint i = 0; i <= tokenIds; i++) {
+            if (addr == token(i).addr) return i;
+        }
+        return 0;
+    }
+
     function registerToken(string memory symbol, address addr)
         public
         override
@@ -142,6 +163,13 @@ contract ChainPostIndexer is IChainPostIndexer, IChainPostControlPanel, Asset {
         successIfNot0 = tokenIdx;
     }
 
+    function queryFeedAddress(address addr) internal view returns (uint) {
+        for (uint i = 0; i <= feedIds; i++) {
+            if (addr == priceFeed(i).addr) return i;
+        }
+        return 0;
+    }
+
     function registerFeed(
         uint tokenId,
         string memory vs,
@@ -156,4 +184,7 @@ contract ChainPostIndexer is IChainPostIndexer, IChainPostControlPanel, Asset {
         }
         successIfNot0 = feedId;
     }
+
+    // function updateToken() public {}
+    // function updateFeed() public {}
 }

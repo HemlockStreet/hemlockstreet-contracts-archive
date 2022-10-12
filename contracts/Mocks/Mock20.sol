@@ -41,5 +41,5 @@ contract Matic is Mock20Base {
 }
 
 contract WrappedBitcoin is Mock20Base {
-    constructor() Mock20Base("Wrapped Bitcoin", "wBTC") {}
+    constructor() Mock20Base("Wrapped Bitcoin", "WBTC") {}
 }

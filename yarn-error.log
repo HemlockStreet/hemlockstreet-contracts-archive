@@ -1,0 +1,66 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\cyaar\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js test
+
+PATH: 
+  C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Eclipse Adoptium\jdk-17.0.2.8-hotspot\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\MongoDB\Server\5.0\bin;C:\Program Files\Go\bin;C:\Program Files\Mozilla Firefox;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\PuTTY\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Windows;C:\Program Files\Git\cmd;C:\Users\cyaar\AppData\Local\Programs\Python\Python310\Scripts;C:\Users\cyaar\AppData\Local\Programs\Python\Python310\;C:\Users\cyaar\scoop\shims;C:\Users\cyaar\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java;C:\Program Files\Java\jdk-17.0.2;C:\Program Files\Java\jre1.8.0_321;C:\Users\cyaar\AppData\Local\atom\bin;C:\Users\cyaar\AppData\Local\Programs\Hyper\resources\bin;C:\Program Files\heroku\bin;C:\Users\cyaar\go\bin;C:\Users\cyaar\AppData\Roaming\npm;C:\Users\cyaar\AppData\Local\Microsoft\WindowsApps;
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  16.16.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: C:\Users\cyaar\repositories\HemlockStreet\hemlockstreet-contracts\package.json: Unexpected token } in JSON at position 361
+      at JSON.parse (<anonymous>)
+      at C:\Users\cyaar\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\cyaar\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\cyaar\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "hemlockstreet-evm-contracts",
+    "version": "1.0.0",
+    "description": "HemlockStreet EVM Contracts is a library for secure, enterprise-grade smart contract development.",
+    "scripts": {
+      "test": "npx hardhat test",
+      "compile": "hardhat compile",
+      "clean": "npx hardhat clean",
+      "gas-report": "env ENABLE_GAS_REPORT=true npm run test",
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/HemlockStreet/hemlockstreet-evm-contracts.git"
+    },
+    "keywords": [
+      "solidity",
+      "ethereum",
+      "smart",
+      "contracts",
+      "security",
+      "hemlock",
+  	"enterprise"
+    ],
+    "author": "ctnava",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/HemlockStreet/hemlockstreet-evm-contracts/issues"
+    },
+    "homepage": "https://github.com/HemlockStreet/hemlockstreet-evm-contracts#readme",
+    "dependencies": {
+      "@chainlink/contracts": "^0.5.1",
+      "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+      "@openzeppelin/contracts": "^4.7.3",
+      "hardhat": "^2.12.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
