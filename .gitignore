@@ -1,5 +1,8 @@
 node_modules
-.env
+static
+local
+**.env
+
 coverage
 coverage.json
 typechain
@@ -12,3 +15,9 @@ artifacts
 **/31337
 **/1337
 **/undefined
+
+**package-lock.json
+**.code-workspace
+**.DS_Store
+**yarn.lock
+**yarn-error.log
